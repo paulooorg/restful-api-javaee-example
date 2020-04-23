@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Properties>
+        <Property name="filename">D:\logs\api\api.log</Property>
+        <Property name="pattern">%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n</Property>
+    </Properties>
+    <Appenders>
+        <Console name="STDOUT">
+            <PatternLayout pattern="${pattern}"/>
+        </Console>
+        <File name="File" fileName="${filename}">
+            <PatternLayout pattern="${pattern}"/>
+        </File>
+    </Appenders>
+    <Loggers>
+        <Logger name="io.github.paulooorg" level="debug">
+            <AppenderRef ref="File"/>
+        </Logger>
+        <Root level="debug">
+            <AppenderRef ref="STDOUT"/>
+        </Root>
+    </Loggers>
+</Configuration>

@@ -2,6 +2,7 @@ package io.github.paulooorg.api.resources;
 
 import io.github.paulooorg.api.model.dto.UserDTO;
 import io.github.paulooorg.api.service.UserService;
+import org.apache.logging.log4j.Logger;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -14,6 +15,9 @@ import java.util.List;
 public class UserResource {
     @Inject
     private UserService userService;
+
+    @Inject
+    private Logger logger;
 
     @GET
     public List<UserDTO> getAll() {
