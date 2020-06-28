@@ -1,8 +1,6 @@
 package io.github.paulooorg.api.resources;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -13,10 +11,14 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 import org.apache.logging.log4j.Logger;
 
+import io.github.paulooorg.api.infrastructure.request.pagination.Pagination;
 import io.github.paulooorg.api.model.dto.UserDTO;
 import io.github.paulooorg.api.model.dto.mapper.UserMapper;
 import io.github.paulooorg.api.model.entities.User;
@@ -33,8 +35,8 @@ public class UserResource {
     private Logger logger;
 
     @GET
-    public List<UserDTO> getAll() {
-        return userService.getAll().stream().map(u -> UserMapper.INSTANCE.userToUserDTO(u)).collect(Collectors.toList());
+    public Response getAll(@Context UriInfo uriInfo) {
+    	return Response.status(Response.Status.OK).entity(userService.getAll(new Pagination(uriInfo))).build();
     }
 
     @GET
