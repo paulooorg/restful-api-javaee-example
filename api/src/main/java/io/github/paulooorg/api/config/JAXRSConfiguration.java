@@ -7,6 +7,7 @@ import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
 import io.github.paulooorg.api.infrastructure.exception.BusinessExceptionMapper;
+import io.github.paulooorg.api.infrastructure.exception.ValidationExceptionMapper;
 import io.github.paulooorg.api.resources.UserResource;
 
 @ApplicationPath("api/v1")
@@ -28,6 +29,7 @@ public class JAXRSConfiguration extends Application {
     private Set<Class<?>> getProviders() {
     	Set<Class<?>> providers = new HashSet<>();
     	providers.add(BusinessExceptionMapper.class);
+    	providers.add(ValidationExceptionMapper.class);
         return providers;
     }
 }

@@ -19,6 +19,7 @@ import javax.ws.rs.core.UriInfo;
 import org.apache.logging.log4j.Logger;
 
 import io.github.paulooorg.api.infrastructure.request.pagination.Pagination;
+import io.github.paulooorg.api.infrastructure.validation.BeanValidator;
 import io.github.paulooorg.api.model.dto.UserDTO;
 import io.github.paulooorg.api.model.dto.mapper.UserMapper;
 import io.github.paulooorg.api.model.entities.User;
@@ -51,6 +52,7 @@ public class UserResource {
 
     @POST
     public Long create(UserDTO user) {
+    	new BeanValidator<UserDTO>().validate(user);
         return userService.create(UserMapper.INSTANCE.userDTOToUser(user));
     }
 

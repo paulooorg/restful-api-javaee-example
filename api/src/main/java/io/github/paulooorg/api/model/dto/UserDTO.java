@@ -1,12 +1,16 @@
 package io.github.paulooorg.api.model.dto;
 
+import javax.validation.constraints.NotBlank;
+
 import io.github.paulooorg.api.model.entities.User;
 
 public class UserDTO {
     private Long id;
 
+    @NotBlank
     private String username;
 
+    @NotBlank
     private String name;
 
     public UserDTO() {
