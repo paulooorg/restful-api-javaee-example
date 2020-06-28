@@ -1,45 +1,38 @@
 package io.github.paulooorg.api.service;
 
-import io.github.paulooorg.api.model.dto.UserDTO;
-import io.github.paulooorg.api.model.entities.User;
-import io.github.paulooorg.api.repository.UserRepository;
+import java.util.List;
+import java.util.Optional;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+
+import io.github.paulooorg.api.model.dto.UserDTO;
+import io.github.paulooorg.api.model.entities.User;
+import io.github.paulooorg.api.repository.UserRepository;
 
 public class UserService {
     @Inject
     private UserRepository userRepository;
 
-    public List<UserDTO> getAll() {
-        return userRepository.findAll().stream().map(u -> new UserDTO(u)).collect(Collectors.toList());
+    public List<User> getAll() {
+        return userRepository.findAll();
     }
 
-    public UserDTO findById(Long id) {
-        Optional<User> user = userRepository.findBy(id);
-        if (user.isPresent()) {
-            return new UserDTO(user.get());
-        }
-        return new UserDTO();
+    public Optional<User> findById(Long id) {
+        return userRepository.findBy(id);
     }
 
     @Transactional
-    public Long create(UserDTO user) {
-        User newUser = new User();
-        newUser.setName(user.getName());
-        newUser.setUsername(user.getUsername());
-        return userRepository.save(newUser).get().getId();
+    public Long create(User user) {
+        return userRepository.save(user).get().getId();
     }
 
     @Transactional
-    public void update(Long id, UserDTO user) {
-        User oldUser = userRepository.findBy(id).get();
-        oldUser.setUsername(user.getUsername());
-        oldUser.setName(user.getName());
-        userRepository.save(oldUser);
+    public void update(Long id, UserDTO dto) {
+        User user = userRepository.findBy(id).get();
+        user.setUsername(dto.getUsername());
+        user.setName(dto.getName());
+        userRepository.save(user);
     }
 
     @Transactional
