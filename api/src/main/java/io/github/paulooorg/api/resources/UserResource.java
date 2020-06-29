@@ -18,6 +18,7 @@ import javax.ws.rs.core.UriInfo;
 
 import org.apache.logging.log4j.Logger;
 
+import io.github.paulooorg.api.infrastructure.request.RequestOptions;
 import io.github.paulooorg.api.infrastructure.request.pagination.Pagination;
 import io.github.paulooorg.api.infrastructure.validation.BeanValidator;
 import io.github.paulooorg.api.model.dto.UserDTO;
@@ -37,7 +38,7 @@ public class UserResource {
 
     @GET
     public Response getAll(@Context UriInfo uriInfo) {
-    	return Response.status(Response.Status.OK).entity(userService.getAll(new Pagination(uriInfo))).build();
+    	return Response.status(Response.Status.OK).entity(userService.getAll(new RequestOptions(uriInfo))).build();
     }
 
     @GET

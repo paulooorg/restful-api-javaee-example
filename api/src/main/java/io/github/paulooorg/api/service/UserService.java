@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 
+import io.github.paulooorg.api.infrastructure.request.RequestOptions;
 import io.github.paulooorg.api.infrastructure.request.pagination.Page;
 import io.github.paulooorg.api.infrastructure.request.pagination.Pagination;
 import io.github.paulooorg.api.model.dto.UserDTO;
@@ -18,8 +19,8 @@ public class UserService {
     @Inject
     private UserRepository userRepository;
 
-    public Page<UserDTO> getAll(Pagination pagination) {
-    	Page<User> pageUsers = userRepository.findAll(pagination);
+    public Page<UserDTO> getAll(RequestOptions requestOptions) {
+    	Page<User> pageUsers = userRepository.findAll(requestOptions);
     	List<UserDTO> usersDTO = pageUsers.getContent().stream().map(u -> UserMapper.INSTANCE.userToUserDTO(u)).collect(Collectors.toList());
     	Page<UserDTO> pageUsersDTO = new Page<UserDTO>(usersDTO, pageUsers.getTotalCount(), pageUsers.getNumberOfPages(), pageUsers.getCurrentPage());
     	return pageUsersDTO;

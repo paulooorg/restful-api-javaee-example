@@ -1,6 +1,7 @@
 package io.github.paulooorg.api.repository;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,16 +10,24 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Root;
 
+import org.apache.logging.log4j.Logger;
+
+import io.github.paulooorg.api.infrastructure.request.RequestOptions;
 import io.github.paulooorg.api.infrastructure.request.pagination.Page;
 import io.github.paulooorg.api.infrastructure.request.pagination.Pagination;
+import io.github.paulooorg.api.infrastructure.request.sorting.Sorting;
 import io.github.paulooorg.api.model.entities.BaseEntity;
 
 public abstract class AbstractEntityRepository<E extends BaseEntity, PK extends Serializable> implements EntityRepository<E, PK> {
     @Inject
     private EntityManager em;
 
+    @Inject
+    private Logger logger;
+    
     private final Class<E> entityType;
 
     public AbstractEntityRepository(Class<E> entityType) {
@@ -53,8 +62,12 @@ public abstract class AbstractEntityRepository<E extends BaseEntity, PK extends 
     }
     
     @Override
-    public Page<E> findAll(Pagination pagination) {
+    public Page<E> findAll(RequestOptions requestOptions) {
     	CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+    	
+    	// Options
+    	Pagination pagination = requestOptions.getPagination();
+    	List<Sorting> sorting = requestOptions.getSorting();
     	
     	// Count
     	CriteriaQuery<Long> countQuery = criteriaBuilder.createQuery(Long.class);
@@ -64,6 +77,21 @@ public abstract class AbstractEntityRepository<E extends BaseEntity, PK extends 
     	// List
     	CriteriaQuery<E> criteriaQuery = criteriaBuilder.createQuery(entityType);
     	Root<E> from = criteriaQuery.from(entityType);
+    	
+    	List<Order> orderBy = new ArrayList<>();
+    	for (Sorting sort : sorting) {
+    		if (sort.getOrder().isDESC()) {
+    			orderBy.add(criteriaBuilder.desc(from.get(sort.getField())));
+    		}
+    		if (sort.getOrder().isASC()) {
+    			orderBy.add(criteriaBuilder.asc(from.get(sort.getField())));
+    		}
+    	}
+    	
+    	if (!orderBy.isEmpty()) {
+    		criteriaQuery.orderBy(orderBy);
+    	}
+    	
     	CriteriaQuery<E> select = criteriaQuery.select(from);
     	TypedQuery<E> typedQuery = em.createQuery(select);
     	typedQuery.setFirstResult((pagination.getPage() - 1) * pagination.getPerPage());
