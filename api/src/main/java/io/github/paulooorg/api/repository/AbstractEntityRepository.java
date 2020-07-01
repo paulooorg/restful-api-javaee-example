@@ -73,38 +73,40 @@ public abstract class AbstractEntityRepository<E extends BaseEntity<PK>, PK exte
     	List<Filtering> filtering = requestOptions.getFiltering();
     	
     	// Count
-    	CriteriaQuery<Long> countQuery = criteriaBuilder.createQuery(Long.class);
-    	Root<E> fromCount = countQuery.from(entityType);
-    	countQuery.select(criteriaBuilder.count(fromCount)).where(createFilters(filtering, criteriaBuilder, fromCount).toArray(new Predicate[0]));
-    	Long count = em.createQuery(countQuery).getSingleResult();
+    	Long count = count(filtering);
     	
     	// List
     	CriteriaQuery<E> criteriaQuery = criteriaBuilder.createQuery(entityType);
     	Root<E> from = criteriaQuery.from(entityType);
-    	
-    	List<Order> orderBy = new ArrayList<>();
-    	for (Sorting sort : sorting) {
-    		if (sort.getOrder().isDESC()) {
-    			orderBy.add(criteriaBuilder.desc(from.get(sort.getField())));
-    		}
-    		if (sort.getOrder().isASC()) {
-    			orderBy.add(criteriaBuilder.asc(from.get(sort.getField())));
-    		}
-    	}
-    	
-    	if (!orderBy.isEmpty()) {
-    		criteriaQuery.orderBy(orderBy);
-    	}
-    	
+    	criteriaQuery.orderBy(createSorting(sorting, criteriaBuilder, from));
     	CriteriaQuery<E> select = criteriaQuery.select(from).where(createFilters(filtering, criteriaBuilder, from).toArray(new Predicate[0]));
     	TypedQuery<E> typedQuery = em.createQuery(select);
     	typedQuery.setFirstResult((pagination.getPage() - 1) * pagination.getPerPage());
     	typedQuery.setMaxResults(pagination.getPerPage());
     	List<E> result = typedQuery.getResultList();
     	
-    	// Page
-    	long numberOfPages = count % pagination.getPerPage() == 0 ? count / pagination.getPerPage() : count / pagination.getPerPage() + 1;
-    	return new Page<E>(result, count, numberOfPages, Long.valueOf(pagination.getPage()));
+    	return new Page<E>(result, count, calculateNumberOfPages(count, pagination), Long.valueOf(pagination.getPage()));
+    }
+    
+    private Long count(List<Filtering> filtering) {
+    	CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+    	CriteriaQuery<Long> countQuery = criteriaBuilder.createQuery(Long.class);
+    	Root<E> fromCount = countQuery.from(entityType);
+    	countQuery.select(criteriaBuilder.count(fromCount)).where(createFilters(filtering, criteriaBuilder, fromCount).toArray(new Predicate[0]));
+    	Long count = em.createQuery(countQuery).getSingleResult();
+    	return count;
+    }
+    
+    private long calculateNumberOfPages(Long totalRows, Pagination pagination) {
+    	return totalRows % pagination.getPerPage() == 0 ? totalRows / pagination.getPerPage() : totalRows / pagination.getPerPage() + 1;
+    }
+    
+    private List<Order> createSorting(List<Sorting> sorting, CriteriaBuilder criteriaBuilder, Root<E> from) {
+    	List<Order> orderBy = new ArrayList<>();
+    	for (Sorting sort : sorting) {
+    		orderBy.add(sort.getOrder().getOrderCreator().create(sort, criteriaBuilder, from));
+    	}
+    	return orderBy;
     }
     
     private List<Predicate> createFilters(List<Filtering> filtering, CriteriaBuilder criteriaBuilder, Root<E> from) {

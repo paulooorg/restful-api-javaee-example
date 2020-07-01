@@ -3,12 +3,15 @@ package io.github.paulooorg.api.infrastructure.request.sorting;
 import java.util.Arrays;
 
 public enum Order {
-	ASC(false), DESC(true);
+	ASC(false, new Asc()), DESC(true, new Desc());
 	
 	private boolean defaultOrder;
 
-	private Order(boolean defaultOrder) {
+	private OrderCreator orderCreator;
+	
+	private Order(boolean defaultOrder, OrderCreator orderCreator) {
 		this.defaultOrder = defaultOrder;
+		this.orderCreator = orderCreator;
 	}
 
 	public boolean isDefaultOrder() {
@@ -30,11 +33,7 @@ public enum Order {
 		}
 	}
 	
-	public boolean isASC() {
-		return this.equals(ASC);
-	}
-	
-	public boolean isDESC() {
-		return this.equals(DESC);
+	public OrderCreator getOrderCreator() {
+		return orderCreator;
 	}
 }
