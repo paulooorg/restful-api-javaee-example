@@ -11,17 +11,19 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Order;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.apache.logging.log4j.Logger;
 
 import io.github.paulooorg.api.infrastructure.request.RequestOptions;
+import io.github.paulooorg.api.infrastructure.request.filtering.Filtering;
 import io.github.paulooorg.api.infrastructure.request.pagination.Page;
 import io.github.paulooorg.api.infrastructure.request.pagination.Pagination;
 import io.github.paulooorg.api.infrastructure.request.sorting.Sorting;
 import io.github.paulooorg.api.model.entities.BaseEntity;
 
-public abstract class AbstractEntityRepository<E extends BaseEntity, PK extends Serializable> implements EntityRepository<E, PK> {
+public abstract class AbstractEntityRepository<E extends BaseEntity<PK>, PK extends Serializable> implements EntityRepository<E, PK> {
     @Inject
     private EntityManager em;
 
@@ -68,10 +70,12 @@ public abstract class AbstractEntityRepository<E extends BaseEntity, PK extends 
     	// Options
     	Pagination pagination = requestOptions.getPagination();
     	List<Sorting> sorting = requestOptions.getSorting();
+    	List<Filtering> filtering = requestOptions.getFiltering();
     	
     	// Count
     	CriteriaQuery<Long> countQuery = criteriaBuilder.createQuery(Long.class);
-    	countQuery.select(criteriaBuilder.count(countQuery.from(entityType)));
+    	Root<E> fromCount = countQuery.from(entityType);
+    	countQuery.select(criteriaBuilder.count(fromCount)).where(createFilters(filtering, criteriaBuilder, fromCount).toArray(new Predicate[0]));
     	Long count = em.createQuery(countQuery).getSingleResult();
     	
     	// List
@@ -92,7 +96,7 @@ public abstract class AbstractEntityRepository<E extends BaseEntity, PK extends 
     		criteriaQuery.orderBy(orderBy);
     	}
     	
-    	CriteriaQuery<E> select = criteriaQuery.select(from);
+    	CriteriaQuery<E> select = criteriaQuery.select(from).where(createFilters(filtering, criteriaBuilder, from).toArray(new Predicate[0]));
     	TypedQuery<E> typedQuery = em.createQuery(select);
     	typedQuery.setFirstResult((pagination.getPage() - 1) * pagination.getPerPage());
     	typedQuery.setMaxResults(pagination.getPerPage());
@@ -101,5 +105,14 @@ public abstract class AbstractEntityRepository<E extends BaseEntity, PK extends 
     	// Page
     	long numberOfPages = count % pagination.getPerPage() == 0 ? count / pagination.getPerPage() : count / pagination.getPerPage() + 1;
     	return new Page<E>(result, count, numberOfPages, Long.valueOf(pagination.getPage()));
+    }
+    
+    private List<Predicate> createFilters(List<Filtering> filtering, CriteriaBuilder criteriaBuilder, Root<E> from) {
+    	List<Predicate> predicates = new ArrayList<>();
+    	for (Filtering filter : filtering) {
+    		Predicate predicate = filter.getOperator().getPredicateCreator().create(filter, criteriaBuilder, from);
+    		predicates.add(predicate);
+    	}
+    	return predicates;
     }
 }
