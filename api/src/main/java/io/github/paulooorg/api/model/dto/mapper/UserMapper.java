@@ -15,14 +15,16 @@ public interface UserMapper {
 	@Mappings({
 		@Mapping(source = "id", target = "id"),
 		@Mapping(source = "username", target = "username"),
-		@Mapping(source = "name", target = "name")
+		@Mapping(source = "name", target = "name"),
+		@Mapping(source = "lastLogin", target = "lastLogin")
 	})
 	UserDTO userToUserDTO(User user);
 	
 	@Mappings({
 		@Mapping(source = "id", target = "id"),
 		@Mapping(source = "username", target = "username"),
-		@Mapping(source = "name", target = "name")
+		@Mapping(source = "name", target = "name"),
+		@Mapping(source = "lastLogin", target = "lastLogin")
 	})
 	User userDTOToUser(UserDTO userDTO);
 }

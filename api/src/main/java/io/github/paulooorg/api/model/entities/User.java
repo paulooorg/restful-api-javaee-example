@@ -1,5 +1,8 @@
 package io.github.paulooorg.api.model.entities;
 
+import java.time.LocalDateTime;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 
 @Entity
@@ -10,6 +13,9 @@ public class User extends PersistentEntity {
 
     private String name;
 
+    @Column(name = "last_login")
+    private LocalDateTime lastLogin;
+    
     public String getUsername() {
         return username;
     }
@@ -33,4 +39,12 @@ public class User extends PersistentEntity {
     public void setName(String name) {
         this.name = name;
     }
+
+	public LocalDateTime getLastLogin() {
+		return lastLogin;
+	}
+
+	public void setLastLogin(LocalDateTime lastLogin) {
+		this.lastLogin = lastLogin;
+	}
 }
