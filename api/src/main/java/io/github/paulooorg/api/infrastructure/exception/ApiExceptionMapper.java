@@ -7,12 +7,12 @@ import javax.ws.rs.ext.Provider;
 import io.github.paulooorg.api.infrastructure.i18n.Messages;
 
 @Provider
-public class BusinessExceptionMapper implements ExceptionMapper<BusinessException> {
+public class ApiExceptionMapper implements ExceptionMapper<ApiException> {
 	@Override
-	public Response toResponse(BusinessException exception) {
+	public Response toResponse(ApiException exception) {
 		Error error = new Error();
 		error.setMessage(Messages.get(exception.getI18n(), exception.getParams()));
 		error.setCode(exception.getErrorCode());
-		return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(error).build();
+		return Response.status(exception.getHttpStatus()).entity(error).build();
 	}
 }

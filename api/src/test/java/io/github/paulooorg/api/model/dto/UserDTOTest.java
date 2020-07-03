@@ -14,7 +14,7 @@ public class UserDTOTest {
 		user.setUsername("Test Username");
 		user.setName("Test Name");
 		
-		UserDTO userDto = UserMapper.INSTANCE.userToUserDTO(user);
+		UserDTO userDto = UserMapper.INSTANCE.entityToDTO(user);
 		
 		assertEquals("Test Username", userDto.getUsername());
 		assertEquals("Test Name", userDto.getName());

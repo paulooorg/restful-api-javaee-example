@@ -55,7 +55,7 @@ public abstract class AbstractEntityRepository<E extends BaseEntity<PK>, PK exte
 
     @Override
     public Optional<E> findBy(PK primaryKey) {
-        return Optional.of(em.find(entityType, primaryKey));
+        return Optional.ofNullable(em.find(entityType, primaryKey));
     }
 
     @Override

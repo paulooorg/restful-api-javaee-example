@@ -1,13 +1,34 @@
 package io.github.paulooorg.api.model.dto;
 
-public class ClientDTO {
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+import io.github.paulooorg.api.model.entities.DocumentType;
+
+public class ClientDTO implements DTO {
+	private Long id;
+	
+	@NotBlank
 	private String name;
 	
+	@NotBlank
+	@Email
 	private String email;
 	
+	@NotBlank
 	private String document;
 	
-	private String documentType;
+	@NotNull
+	private DocumentType documentType;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public String getName() {
 		return name;
@@ -33,11 +54,11 @@ public class ClientDTO {
 		this.document = document;
 	}
 
-	public String getDocumentType() {
+	public DocumentType getDocumentType() {
 		return documentType;
 	}
 
-	public void setDocumentType(String documentType) {
+	public void setDocumentType(DocumentType documentType) {
 		this.documentType = documentType;
 	}
 }

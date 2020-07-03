@@ -1,28 +1,21 @@
 package io.github.paulooorg.api.model.dto.mapper;
 
+import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
 
 import io.github.paulooorg.api.model.dto.ClientDTO;
 import io.github.paulooorg.api.model.entities.Client;
 
-public interface ClientMapper {
+@Mapper
+public interface ClientMapper extends EntityMapper<ClientDTO, Client> {
 	ClientMapper INSTANCE = Mappers.getMapper(ClientMapper.class);
 	
+	@Override
 	@Mappings({
-		@Mapping(source = "name", target = "name"),
-		@Mapping(source = "email", target = "email"),
-		@Mapping(source = "document", target = "document"),
-		@Mapping(source = "documentType", target = "documentType")
+		@Mapping(target = "id", ignore = true)
 	})
-	ClientDTO clientToClientDTO(Client client);
-	
-	@Mappings({
-		@Mapping(source = "name", target = "name"),
-		@Mapping(source = "email", target = "email"),
-		@Mapping(source = "document", target = "document"),
-		@Mapping(source = "documentType", target = "documentType")
-	})
-	Client clientDTOTOClient(ClientDTO clientDTO);
+	Client merge(ClientDTO dto, @MappingTarget Client entity);
 }

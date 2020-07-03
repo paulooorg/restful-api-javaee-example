@@ -6,7 +6,7 @@ import javax.validation.constraints.NotBlank;
 
 import io.github.paulooorg.api.model.entities.User;
 
-public class UserDTO {
+public class UserDTO implements DTO {
     private Long id;
 
     @NotBlank
