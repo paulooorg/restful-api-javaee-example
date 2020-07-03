@@ -10,6 +10,7 @@ import io.github.paulooorg.api.infrastructure.exception.ApiExceptionMapper;
 import io.github.paulooorg.api.infrastructure.exception.BusinessExceptionMapper;
 import io.github.paulooorg.api.infrastructure.exception.ValidationExceptionMapper;
 import io.github.paulooorg.api.infrastructure.json.CustomObjectMapper;
+import io.github.paulooorg.api.resources.ClientResource;
 import io.github.paulooorg.api.resources.ModalityResource;
 import io.github.paulooorg.api.resources.UserResource;
 
@@ -27,6 +28,7 @@ public class JAXRSConfiguration extends Application {
     	Set<Class<?>> classes = new HashSet<>();
         classes.add(UserResource.class);
         classes.add(ModalityResource.class);
+        classes.add(ClientResource.class);
         return classes;
     }
     
