@@ -5,7 +5,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import io.github.paulooorg.api.model.entities.DocumentType;
+import io.github.paulooorg.api.model.validators.ValidClientDTO;
 
+@ValidClientDTO
 public class ClientDTO implements DTO {
 	private Long id;
 	
