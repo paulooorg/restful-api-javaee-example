@@ -27,6 +27,7 @@ public class SAC implements AmortizationStrategy {
             } 
             payment.setPaymentDate(lastPaymentDate);
             payment.setPaymentNumber(paymentNumber);
+            payment.setLoan(loan);
             payments.add(payment);
         }
         return payments;

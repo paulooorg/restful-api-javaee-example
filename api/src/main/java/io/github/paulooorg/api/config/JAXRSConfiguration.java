@@ -11,7 +11,9 @@ import io.github.paulooorg.api.infrastructure.exception.BusinessExceptionMapper;
 import io.github.paulooorg.api.infrastructure.exception.ValidationExceptionMapper;
 import io.github.paulooorg.api.infrastructure.json.CustomObjectMapper;
 import io.github.paulooorg.api.resources.ClientResource;
+import io.github.paulooorg.api.resources.LoanResource;
 import io.github.paulooorg.api.resources.ModalityResource;
+import io.github.paulooorg.api.resources.SimulationResource;
 import io.github.paulooorg.api.resources.UserResource;
 
 @ApplicationPath("api/v1")
@@ -29,6 +31,8 @@ public class JAXRSConfiguration extends Application {
         classes.add(UserResource.class);
         classes.add(ModalityResource.class);
         classes.add(ClientResource.class);
+        classes.add(LoanResource.class);
+        classes.add(SimulationResource.class);
         return classes;
     }
     

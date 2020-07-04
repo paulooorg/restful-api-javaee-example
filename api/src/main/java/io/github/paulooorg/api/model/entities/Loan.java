@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -30,7 +31,7 @@ public class Loan extends PersistentEntity {
     @JoinColumn(name = "modality_id")
     private Modality modality;
 
-    @OneToMany(mappedBy = "loan")
+    @OneToMany(mappedBy = "loan", cascade = CascadeType.ALL)
     private List<Payment> payments = new ArrayList<>();
 
     public void simulate() {
@@ -38,6 +39,7 @@ public class Loan extends PersistentEntity {
     }
 
     public void addPayment(Payment payment) {
+    	payment.setLoan(this);
         getPayments().add(payment);
     }
 
