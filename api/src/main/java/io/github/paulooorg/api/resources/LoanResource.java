@@ -10,9 +10,8 @@ import io.github.paulooorg.api.model.entities.Loan;
 import io.github.paulooorg.api.service.EntityService;
 import io.github.paulooorg.api.service.LoanService;
 
-//TODO: Only listing
 @Path("loan")
-public class LoanResource extends AbstractGenericResource<LoanDTO, Loan> {
+public class LoanResource extends AbstractGenericListResource<LoanDTO, Loan> {
 	@Inject
 	private LoanService loanService;
 	

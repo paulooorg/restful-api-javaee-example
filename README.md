@@ -6,7 +6,7 @@
 - [ ] Swagger
 - [X] Sorting
 - [ ] Filtering
-- [ ] Resources
+- [X] Resources
 - [X] Deploy Wildfly Maven
 - [ ] Integration Testing
 - [ ] Cache
