@@ -23,7 +23,16 @@ public class SimulationService {
 	
 	@Inject
 	private LoanService loanService;
-	
+
+	public SimulationService() {
+	}
+
+	@Deprecated
+	public SimulationService(ModalityService modalityService, ClientService clientService) {
+		this.modalityService = modalityService;
+		this.clientService = clientService;
+	}
+
 	public Loan simulate(SimulationDTO simulationDTO) {
 		Loan loan = createLoan(simulationDTO);
 		loan.simulate();

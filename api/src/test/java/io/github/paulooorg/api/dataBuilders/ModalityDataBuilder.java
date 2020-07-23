@@ -18,7 +18,12 @@ public class ModalityDataBuilder {
 		return this;
 	}
 	
-	public ModalityDataBuilder iterestRate(BigDecimal interestRate) {
+	public ModalityDataBuilder price() {
+		modality.setAmortizationMethod(AmortizationMethod.PRICE);
+		return this;
+	}
+	
+	public ModalityDataBuilder interestRate(BigDecimal interestRate) {
 		modality.setInterestRate(interestRate);
 		return this;
 	}

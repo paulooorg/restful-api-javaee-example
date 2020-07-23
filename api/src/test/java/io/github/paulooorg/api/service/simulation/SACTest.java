@@ -18,14 +18,14 @@ public class SACTest {
 				.amount(new BigDecimal("12300"))
 				.firstPaymentDate(LocalDate.now())
 				.termInMonths(60)
-				.modality(new ModalityDataBuilder().sac().monthly().iterestRate(new BigDecimal("0.48")).build())
+				.modality(new ModalityDataBuilder().sac().monthly().interestRate(new BigDecimal("0.48")).build())
 				.build();
 		
 		loan.simulate();
 		
 		assertEquals(60, loan.getPayments().size());
 		assertEquals(LocalDate.now(), loan.getPayments().get(0).getPaymentDate());
-		assertEquals(loan.getBalance().getValue(), loan.getAmount().plus(loan.getTotalInterest()).getValue());
-		assertEquals(loan.getAmount().getValue(), loan.getBalance().minus(loan.getTotalInterest()).getValue());
+		assertEquals(loan.getBalance().getRoundedValue(), loan.getAmount().plus(loan.getTotalInterest()).getRoundedValue());
+		assertEquals(loan.getAmount().getRoundedValue(), loan.getBalance().minus(loan.getTotalInterest()).getRoundedValue());
 	}
 }

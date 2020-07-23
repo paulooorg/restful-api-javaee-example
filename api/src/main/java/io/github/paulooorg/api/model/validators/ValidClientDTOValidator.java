@@ -9,8 +9,8 @@ public class ValidClientDTOValidator implements ConstraintValidator<ValidClientD
 	@Override
 	public boolean isValid(ClientDTO value, ConstraintValidatorContext context) {
 		context.disableDefaultConstraintViolation();
+		// You can add another property like that
 		context.buildConstraintViolationWithTemplate("{invalidDocument}").addPropertyNode("document").addConstraintViolation();
-		//context.buildConstraintViolationWithTemplate("{invalidDocument}").addPropertyNode("documentType").addConstraintViolation();
 		return value.getDocumentType().getValidator().isValid(value.getDocument());
 	}
 }

@@ -2,6 +2,7 @@ package io.github.paulooorg.api.model.entities;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Currency;
 
 import javax.persistence.Embeddable;
 
@@ -9,16 +10,16 @@ import javax.persistence.Embeddable;
 public class Money {
     private BigDecimal value;
 
-    private static final RoundingMode DEFAULT_ROUNDING_MODE = RoundingMode.HALF_UP;
+    public static final RoundingMode DEFAULT_ROUNDING_MODE = RoundingMode.HALF_EVEN;
 
-    //TODO: Currency
+    public static final Currency CURRENCY = Currency.getInstance("BRL"); 
     
     public Money() {
-        this.value = BigDecimal.ZERO.setScale(2, DEFAULT_ROUNDING_MODE);
+        this.value = BigDecimal.ZERO;
     }
 
     public Money(BigDecimal value) {
-        this.value = value.setScale(2, DEFAULT_ROUNDING_MODE);
+        this.value = value;
     }
 
     public Money times(BigDecimal factor) {
@@ -38,19 +39,22 @@ public class Money {
     }
 
     public Money div(Integer divisor) {
-        return new Money(value.divide(new BigDecimal(divisor), DEFAULT_ROUNDING_MODE));
+        return new Money(value.divide(new BigDecimal(divisor)));
     }
 
     public BigDecimal getValue() {
         return value;
     }
 
+    public BigDecimal getRoundedValue() {
+    	return value.setScale(CURRENCY.getDefaultFractionDigits(), DEFAULT_ROUNDING_MODE);
+    }
+    
 	@Override
 	public String toString() {
 		StringBuilder toStringBuilder = new StringBuilder();
-		//TODO: Currency
-		toStringBuilder.append("R$ ");
-		toStringBuilder.append(value);
+		toStringBuilder.append(CURRENCY.getSymbol()).append(" ");
+		toStringBuilder.append(getRoundedValue());
 		return toStringBuilder.toString();
 	}
 }

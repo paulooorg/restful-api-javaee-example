@@ -1,12 +1,12 @@
 package io.github.paulooorg.api.service.simulation;
 
-import io.github.paulooorg.api.model.entities.Loan;
-import io.github.paulooorg.api.model.entities.Money;
-import io.github.paulooorg.api.model.entities.Payment;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import io.github.paulooorg.api.model.entities.Loan;
+import io.github.paulooorg.api.model.entities.Money;
+import io.github.paulooorg.api.model.entities.Payment;
 
 public class SAC implements AmortizationStrategy {
     @Override
@@ -18,11 +18,9 @@ public class SAC implements AmortizationStrategy {
             Payment payment = new Payment();
             payment.setPrincipal(amortization);
             Money balance = loan.getAmount().minus(amortization.times(paymentNumber - 1));
-            //TODO: RatePeriod
-            payment.setInterest(balance.times(loan.getModality().getInterestRate()).div(100));
+            payment.setInterest(balance.times(loan.getModality().getMonthlyInterestRate()).div(100));
             payment.setPayment(payment.getPrincipal().plus(payment.getInterest()));
             if (paymentNumber > 1) {
-            	//TODO: Payment Interval
             	lastPaymentDate = lastPaymentDate.plusMonths(1);
             } 
             payment.setPaymentDate(lastPaymentDate);
