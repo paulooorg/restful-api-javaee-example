@@ -2,7 +2,6 @@ package io.github.paulooorg.api.resources;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -16,6 +15,7 @@ import io.github.paulooorg.api.model.dto.DTO;
 import io.github.paulooorg.api.model.dto.mapper.EntityMapper;
 import io.github.paulooorg.api.model.entities.PersistentEntity;
 import io.github.paulooorg.api.service.EntityService;
+import io.github.paulooorg.api.util.Resources;
 
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -29,14 +29,14 @@ public abstract class AbstractGenericResource<D extends DTO, E extends Persisten
 
 	@Override
 	public Long create(D dto) {
-		logger.debug("REST request from {} with path {} to create entity", getClass().getSimpleName(), getPathValue());
+		logger.debug("REST request from {} with path {} to create entity", getClass().getSimpleName(), Resources.getPathValue(getClass()));
     	new BeanValidator<D>().validate(dto);
         return getService().create(getMapper().DTOToEntity(dto));
 	}
 
 	@Override
 	public void update(Long id, D dto) {
-		logger.debug("REST request from {} with path {} to update entity", getClass().getSimpleName(), getPathValue());
+		logger.debug("REST request from {} with path {} to update entity", getClass().getSimpleName(), Resources.getPathValue(getClass()));
 		try {
 			getService().update(id, dto);
 		} catch (BusinessException e) {
@@ -47,7 +47,7 @@ public abstract class AbstractGenericResource<D extends DTO, E extends Persisten
 
 	@Override
 	public void delete(Long id) {
-		logger.debug("REST request from {} with path {} to delete entity", getClass().getSimpleName(), getPathValue());
+		logger.debug("REST request from {} with path {} to delete entity", getClass().getSimpleName(), Resources.getPathValue(getClass()));
 		try {
 			getService().delete(id);
 		} catch (BusinessException e) {
@@ -60,14 +60,5 @@ public abstract class AbstractGenericResource<D extends DTO, E extends Persisten
 		if (e.getErrorCode().equals(ErrorCodes.ENTITY_ID_NOT_FOUND)) {
 			throw ApiExceptions.entityIdNotFound(id);
 		}
-	}
-	
-	//TODO: Duplicate in AbstractGenericListResource
-	private String getPathValue() {
-		Path path = getClass().getAnnotation(Path.class);
-		if (path != null) {
-			return path.value();
-		}
-		return "Annotation Path Not Found";
 	}
 }

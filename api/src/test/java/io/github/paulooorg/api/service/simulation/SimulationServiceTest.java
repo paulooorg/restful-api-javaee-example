@@ -46,6 +46,7 @@ public class SimulationServiceTest {
 	}
 	
 	@Test
+	@SuppressWarnings("deprecation")
 	public void shouldThrowsExceptionWhenModalityNotFound() {
 		BusinessException exception = assertThrows(BusinessException.class, () -> {
 			when(clientService.findById(anyLong())).thenReturn(Optional.ofNullable(new Client()));
