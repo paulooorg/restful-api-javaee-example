@@ -15,6 +15,6 @@
 - [ ] Docker
 - [ ] Monitoring
 - [ ] HATEOAS
-- [ ] application.properties Configuration (Database, Logs, JWT Secret Key...)
+- [X] application.properties Configuration (Database, Logs, JWT Secret Key...)
 - [X] Code coverage
 - [ ] CORS and CSRF
