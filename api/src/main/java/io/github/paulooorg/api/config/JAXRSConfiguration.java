@@ -6,12 +6,14 @@ import java.util.Set;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
+import io.github.paulooorg.api.infrastructure.auth.AuthenticationFilter;
 import io.github.paulooorg.api.infrastructure.exception.ApiExceptionMapper;
 import io.github.paulooorg.api.infrastructure.exception.BusinessExceptionMapper;
 import io.github.paulooorg.api.infrastructure.exception.ValidationExceptionMapper;
 import io.github.paulooorg.api.infrastructure.json.CustomObjectMapper;
 import io.github.paulooorg.api.resources.ClientResource;
 import io.github.paulooorg.api.resources.LoanResource;
+import io.github.paulooorg.api.resources.LoginResource;
 import io.github.paulooorg.api.resources.ModalityResource;
 import io.github.paulooorg.api.resources.SimulationResource;
 import io.github.paulooorg.api.resources.UserResource;
@@ -33,6 +35,7 @@ public class JAXRSConfiguration extends Application {
         classes.add(ClientResource.class);
         classes.add(LoanResource.class);
         classes.add(SimulationResource.class);
+        classes.add(LoginResource.class);
         return classes;
     }
     
@@ -42,6 +45,7 @@ public class JAXRSConfiguration extends Application {
     	providers.add(ValidationExceptionMapper.class);
     	providers.add(ApiExceptionMapper.class);
     	providers.add(CustomObjectMapper.class);
+    	providers.add(AuthenticationFilter.class);
         return providers;
     }
 }

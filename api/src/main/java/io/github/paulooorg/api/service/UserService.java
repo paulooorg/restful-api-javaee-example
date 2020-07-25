@@ -1,5 +1,7 @@
 package io.github.paulooorg.api.service;
 
+import java.util.Optional;
+
 import javax.inject.Inject;
 
 import io.github.paulooorg.api.model.dto.UserDTO;
@@ -21,5 +23,9 @@ public class UserService extends AbstractEntityService<UserDTO, User> {
 	@Override
 	public EntityMapper<UserDTO, User> getMapper() {
 		return UserMapper.INSTANCE;
+	}
+	
+	public Optional<User> findByUsernameAndPassword(String username, String password) {
+		return userRepository.findByUsernameAndPassword(username, password);
 	}
 }

@@ -25,7 +25,7 @@ import io.github.paulooorg.api.model.entities.BaseEntity;
 
 public abstract class AbstractEntityRepository<E extends BaseEntity<PK>, PK extends Serializable> implements EntityRepository<E, PK> {
     @Inject
-    private EntityManager em;
+    protected EntityManager em;
 
     @Inject
     private Logger logger;
