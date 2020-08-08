@@ -6,7 +6,8 @@ import java.util.Set;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
-import io.github.paulooorg.api.infrastructure.auth.AuthenticationFilter;
+import io.github.paulooorg.api.infrastructure.authentication.AuthenticationFilter;
+import io.github.paulooorg.api.infrastructure.authorization.AuthorizationFilter;
 import io.github.paulooorg.api.infrastructure.exception.ApiExceptionMapper;
 import io.github.paulooorg.api.infrastructure.exception.BusinessExceptionMapper;
 import io.github.paulooorg.api.infrastructure.exception.ValidationExceptionMapper;
@@ -46,6 +47,7 @@ public class JAXRSConfiguration extends Application {
     	providers.add(ApiExceptionMapper.class);
     	providers.add(CustomObjectMapper.class);
     	providers.add(AuthenticationFilter.class);
+    	providers.add(AuthorizationFilter.class);
         return providers;
     }
 }

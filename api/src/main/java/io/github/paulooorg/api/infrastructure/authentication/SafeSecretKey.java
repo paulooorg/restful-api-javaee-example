@@ -1,4 +1,4 @@
-package io.github.paulooorg.api.infrastructure.auth;
+package io.github.paulooorg.api.infrastructure.authentication;
 
 import javax.crypto.SecretKey;
 

@@ -1,4 +1,4 @@
-package io.github.paulooorg.api.infrastructure.auth;
+package io.github.paulooorg.api.infrastructure.authentication;
 
 import java.io.IOException;
 
@@ -10,6 +10,7 @@ import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.ext.Provider;
 
+import io.github.paulooorg.api.infrastructure.authorization.AuthorizationChecker;
 import io.github.paulooorg.api.infrastructure.exception.BusinessException;
 import io.github.paulooorg.api.service.UserService;
 
@@ -19,9 +20,14 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 	@Inject
 	private UserService userService;
 	
+	@Inject
+	private AuthorizationChecker authorizationChecker;
+	
 	@Override
 	public void filter(ContainerRequestContext requestContext) throws IOException {
-		if (isNotLoginRequest(requestContext)) {
+		String resourcePath = requestContext.getUriInfo().getPath().substring(1); // Remove fist '/'
+		String httpMethod = requestContext.getMethod();
+		if (authorizationChecker.isNotPublicAccess(resourcePath, httpMethod)) {
 			String accessToken = JwtUtil.prepareAccessToken(getAccessToken(requestContext));
 			boolean valid = new JwtUtil().isAccessTokenValid(accessToken);
 			if (valid) {
@@ -44,9 +50,5 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 			throw new BusinessException("invalidAuthorizationHeader", new Object[] {});
 		}
 		return accessToken;
-	}
-	
-	private boolean isNotLoginRequest(ContainerRequestContext requestContext) {
-		return !requestContext.getUriInfo().getPath().endsWith("login");
 	}
 }

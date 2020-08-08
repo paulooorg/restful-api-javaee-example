@@ -4,9 +4,9 @@ import java.util.Optional;
 
 import javax.inject.Inject;
 
-import io.github.paulooorg.api.infrastructure.auth.JwtUtil;
-import io.github.paulooorg.api.infrastructure.auth.LoginDTO;
-import io.github.paulooorg.api.infrastructure.auth.TokenDTO;
+import io.github.paulooorg.api.infrastructure.authentication.JwtUtil;
+import io.github.paulooorg.api.infrastructure.authentication.LoginDTO;
+import io.github.paulooorg.api.infrastructure.authentication.TokenDTO;
 import io.github.paulooorg.api.infrastructure.exception.BusinessException;
 import io.github.paulooorg.api.model.entities.User;
 

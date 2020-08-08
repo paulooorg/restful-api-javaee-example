@@ -18,7 +18,7 @@ public class UserRepository extends AbstractEntityRepository<User, Long> {
     
     public Optional<User> findByUsernameAndPassword(String username, String password) {
     	try {
-    		User user = em.createQuery("select u from User u where u.username = :username and u.password = :password", User.class)
+    		User user = em.createQuery("select u from User u left join fetch u.profiles where u.username = :username and u.password = :password", User.class)
     	    		.setParameter("username", username)
     	    		.setParameter("password", password)
     	    		.getSingleResult();

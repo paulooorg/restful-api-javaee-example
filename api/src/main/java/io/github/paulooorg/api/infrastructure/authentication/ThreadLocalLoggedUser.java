@@ -1,4 +1,4 @@
-package io.github.paulooorg.api.infrastructure.auth;
+package io.github.paulooorg.api.infrastructure.authentication;
 
 public final class ThreadLocalLoggedUser {
 	private static final ThreadLocal<LoggedUser> loggedUser = new ThreadLocal<>();

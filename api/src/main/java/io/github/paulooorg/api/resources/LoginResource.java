@@ -8,7 +8,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import io.github.paulooorg.api.infrastructure.auth.LoginDTO;
+import io.github.paulooorg.api.infrastructure.authentication.LoginDTO;
 import io.github.paulooorg.api.service.LoginService;
 
 @Produces(MediaType.APPLICATION_JSON)

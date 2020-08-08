@@ -1,4 +1,4 @@
-package io.github.paulooorg.api.infrastructure.auth;
+package io.github.paulooorg.api.infrastructure.authentication;
 
 public class SecurityContext {
 	public LoggedUser getLoggedUser() {
