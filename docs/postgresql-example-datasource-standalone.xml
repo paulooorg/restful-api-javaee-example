@@ -1,0 +1,15 @@
+<datasource jndi-name="java:/datasources/apiDS" pool-name="apiDS">
+    <connection-url>jdbc:postgresql://localhost:5432/api</connection-url>
+    <driver-class>org.postgresql.Driver</driver-class>
+    <driver>postgresql</driver>
+    <security>
+        <user-name>myusername</user-name>
+        <password>mypassword</password>
+    </security>
+    <validation>
+        <check-valid-connection-sql>select 1</check-valid-connection-sql>
+        <validate-on-match>false</validate-on-match>
+        <background-validation>true</background-validation>
+        <background-validation-millis>10000</background-validation-millis>
+    </validation>
+</datasource>
