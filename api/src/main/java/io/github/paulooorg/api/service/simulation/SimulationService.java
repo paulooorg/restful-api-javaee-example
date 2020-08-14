@@ -36,7 +36,7 @@ public class SimulationService {
 	public Loan simulate(SimulationDTO simulationDTO) {
 		Loan loan = createLoan(simulationDTO);
 		loan.simulate();
-		return loanService.findById(loanService.create(loan)).get();
+		return loanService.create(loan);
 	}
 	
 	private Loan createLoan(SimulationDTO simulationDTO) {

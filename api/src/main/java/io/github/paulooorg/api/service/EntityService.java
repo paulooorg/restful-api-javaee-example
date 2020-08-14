@@ -12,9 +12,9 @@ public interface EntityService<D extends DTO, E extends PersistentEntity> {
 	
 	public Optional<E> findById(Long id);
 	
-	public Long create(E entity);
+	public E create(E entity);
 	
-	public void update(Long id, D dto);
+	public E update(Long id, D dto);
 	
 	public void delete(Long id);
 }

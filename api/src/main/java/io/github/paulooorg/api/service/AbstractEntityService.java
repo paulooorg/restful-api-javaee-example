@@ -35,17 +35,17 @@ public abstract class AbstractEntityService<D extends DTO, E extends PersistentE
 
 	@Override
 	@Transactional
-	public Long create(E entity) {
-		return getRepository().save(entity).get().getId();
+	public E create(E entity) {
+		return getRepository().save(entity).get();
 	}
 
 	@Override
 	@Transactional
-	public void update(Long id, D dto) {
+	public E update(Long id, D dto) {
 		Optional<E> entity = getRepository().findBy(id);
 		if (entity.isPresent()) {
 			E newEntity = getMapper().merge(dto, entity.get());
-			getRepository().save(newEntity);
+			return getRepository().save(newEntity).get();
 		} else {
 			throw new BusinessException("entityIdNotFound", new Object[] {id}, ErrorCodes.ENTITY_ID_NOT_FOUND);
 		}

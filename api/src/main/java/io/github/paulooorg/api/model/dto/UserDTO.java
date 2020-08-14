@@ -6,9 +6,7 @@ import javax.validation.constraints.NotBlank;
 
 import io.github.paulooorg.api.model.entities.User;
 
-public class UserDTO implements DTO {
-    private Long id;
-
+public class UserDTO extends DTO {
     @NotBlank
     private String username;
 
@@ -25,14 +23,6 @@ public class UserDTO implements DTO {
         this.name = user.getName();
         this.id = user.getId();
         this.lastLogin = user.getLastLogin();
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getUsername() {

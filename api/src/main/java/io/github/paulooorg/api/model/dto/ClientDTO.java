@@ -8,9 +8,7 @@ import io.github.paulooorg.api.model.entities.DocumentType;
 import io.github.paulooorg.api.model.validators.ValidClientDTO;
 
 @ValidClientDTO
-public class ClientDTO implements DTO {
-	private Long id;
-	
+public class ClientDTO extends DTO {
 	@NotBlank
 	private String name;
 	
@@ -23,14 +21,6 @@ public class ClientDTO implements DTO {
 	
 	@NotNull
 	private DocumentType documentType;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public String getName() {
 		return name;

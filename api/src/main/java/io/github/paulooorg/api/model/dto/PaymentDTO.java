@@ -3,7 +3,7 @@ package io.github.paulooorg.api.model.dto;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class PaymentDTO implements DTO {
+public class PaymentDTO extends DTO {
 	private LocalDate paymentDate;
 	
 	private Integer paymentNumber;

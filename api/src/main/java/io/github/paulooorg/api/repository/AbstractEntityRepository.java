@@ -14,8 +14,6 @@ import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import org.apache.logging.log4j.Logger;
-
 import io.github.paulooorg.api.infrastructure.request.RequestOptions;
 import io.github.paulooorg.api.infrastructure.request.filtering.Filtering;
 import io.github.paulooorg.api.infrastructure.request.pagination.Page;
@@ -26,9 +24,6 @@ import io.github.paulooorg.api.model.entities.BaseEntity;
 public abstract class AbstractEntityRepository<E extends BaseEntity<PK>, PK extends Serializable> implements EntityRepository<E, PK> {
     @Inject
     protected EntityManager em;
-
-    @Inject
-    private Logger logger;
     
     private final Class<E> entityType;
 
@@ -44,6 +39,7 @@ public abstract class AbstractEntityRepository<E extends BaseEntity<PK>, PK exte
             em.merge(entity);
         }
         em.flush();
+        em.refresh(entity);
         return Optional.of(entity);
     }
 
@@ -60,7 +56,7 @@ public abstract class AbstractEntityRepository<E extends BaseEntity<PK>, PK exte
 
     @Override
     public List<E> findAll() {
-        return em.createQuery("SELECT e FROM " + entityType.getSimpleName() + " e ").getResultList();
+        return em.createQuery("SELECT e FROM " + entityType.getSimpleName() + " e ", entityType).getResultList();
     }
     
     @Override

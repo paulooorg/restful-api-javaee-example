@@ -4,10 +4,12 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Currency;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
 public class Money {
+	@Column(scale = 2)
     private BigDecimal value;
 
     public static final RoundingMode DEFAULT_ROUNDING_MODE = RoundingMode.HALF_EVEN;

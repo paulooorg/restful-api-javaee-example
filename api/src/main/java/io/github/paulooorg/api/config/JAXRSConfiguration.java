@@ -17,6 +17,7 @@ import io.github.paulooorg.api.resources.ClientResource;
 import io.github.paulooorg.api.resources.LoanResource;
 import io.github.paulooorg.api.resources.LoginResource;
 import io.github.paulooorg.api.resources.ModalityResource;
+import io.github.paulooorg.api.resources.PaymentResource;
 import io.github.paulooorg.api.resources.SimulationResource;
 import io.github.paulooorg.api.resources.UserResource;
 
@@ -39,6 +40,7 @@ public class JAXRSConfiguration extends Application {
         classes.add(LoanResource.class);
         classes.add(SimulationResource.class);
         classes.add(LoginResource.class);
+        classes.add(PaymentResource.class);
         return classes;
     }
     

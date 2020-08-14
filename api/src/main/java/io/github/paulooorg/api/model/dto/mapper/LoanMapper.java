@@ -54,13 +54,7 @@ public interface LoanMapper extends EntityMapper<LoanDTO, Loan> {
 	public static List<PaymentDTO> paymentsToPaymentsDTO(List<Payment> payments) {
 		List<PaymentDTO> paymentsDTO = new ArrayList<>();
 		for (Payment payment : payments) {
-			PaymentDTO paymentDTO = new PaymentDTO();
-			paymentDTO.setPrincipal(payment.getPrincipal().getValue());
-			paymentDTO.setInterest(payment.getInterest().getValue());
-			paymentDTO.setPaymentDate(payment.getPaymentDate());
-			paymentDTO.setPaymentNumber(payment.getPaymentNumber());
-			paymentDTO.setPayment(payment.getPayment().getValue());
-			paymentsDTO.add(paymentDTO);
+			paymentsDTO.add(PaymentMapper.INSTANCE.entityToDTO(payment));
 		}
 		return paymentsDTO;
 	}

@@ -8,9 +8,7 @@ import javax.validation.constraints.NotNull;
 import io.github.paulooorg.api.model.entities.AmortizationMethod;
 import io.github.paulooorg.api.model.entities.RatePeriod;
 
-public class ModalityDTO implements DTO {
-	private Long id;
-	
+public class ModalityDTO extends DTO {
 	@NotBlank
 	private String name;
 	
@@ -25,14 +23,6 @@ public class ModalityDTO implements DTO {
 	
 	@NotNull
 	private RatePeriod ratePeriod;
-	
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public String getName() {
 		return name;

@@ -4,9 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
-public class LoanDTO implements DTO {
-	private Long id;
-	
+public class LoanDTO extends DTO {
 	private BigDecimal amount;
 	
 	private BigDecimal balance;
@@ -22,14 +20,6 @@ public class LoanDTO implements DTO {
 	private Long modalityId;
 	
 	private List<PaymentDTO> payments;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public BigDecimal getAmount() {
 		return amount;

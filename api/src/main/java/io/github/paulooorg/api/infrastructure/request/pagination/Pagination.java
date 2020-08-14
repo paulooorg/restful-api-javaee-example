@@ -3,6 +3,8 @@ package io.github.paulooorg.api.infrastructure.request.pagination;
 import javax.ws.rs.core.UriInfo;
 
 public class Pagination {
+	public static final int DEFAULT_PAGE_SIZE = 10;
+	
 	private int page = 1;
 	
 	private int perPage = 10;
