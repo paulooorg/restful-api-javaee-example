@@ -16,9 +16,11 @@ import io.github.paulooorg.api.infrastructure.metrics.JAXRSMetricsFilter;
 import io.github.paulooorg.api.resources.ClientResource;
 import io.github.paulooorg.api.resources.LoanResource;
 import io.github.paulooorg.api.resources.LoginResource;
+import io.github.paulooorg.api.resources.LogoutResource;
 import io.github.paulooorg.api.resources.ModalityResource;
 import io.github.paulooorg.api.resources.PaymentResource;
 import io.github.paulooorg.api.resources.SimulationResource;
+import io.github.paulooorg.api.resources.UserAccountResource;
 import io.github.paulooorg.api.resources.UserResource;
 
 @ApplicationPath("api/v1")
@@ -35,11 +37,13 @@ public class JAXRSConfiguration extends Application {
     private Set<Class<?>> getResources() {
     	Set<Class<?>> classes = new HashSet<>();
         classes.add(UserResource.class);
+        classes.add(UserAccountResource.class);
         classes.add(ModalityResource.class);
         classes.add(ClientResource.class);
         classes.add(LoanResource.class);
         classes.add(SimulationResource.class);
         classes.add(LoginResource.class);
+        classes.add(LogoutResource.class);
         classes.add(PaymentResource.class);
         return classes;
     }

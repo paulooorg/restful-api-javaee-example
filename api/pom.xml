@@ -95,6 +95,11 @@
 		    <artifactId>metrics-servlets</artifactId>
 		    <version>4.1.2</version>
 		</dependency>
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-email</artifactId>
+		    <version>1.5</version>
+		</dependency>
 		
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>

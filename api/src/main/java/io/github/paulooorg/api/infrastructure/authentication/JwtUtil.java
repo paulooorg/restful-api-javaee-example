@@ -35,10 +35,6 @@ public class JwtUtil {
 		}
 	}
 	
-	public boolean isRefreshTokenValid(String refreshToken) {
-		return false;
-	}
-	
 	public TokenDTO createTokenDTO(User user) {
 		Date expirationDate = getExpirationDate();
 		String accessToken = Jwts.builder()
@@ -48,10 +44,8 @@ public class JwtUtil {
 				.signWith(getSecretKey())
 				.setExpiration(expirationDate)
 				.compact();
-
-	   String refreshToken = "TODO";
-	   
-	   return new TokenDTO(accessToken, expirationDate, refreshToken);
+		
+	   return new TokenDTO(accessToken, expirationDate);
 	}
 	
 	private SecretKey getSecretKey() {
@@ -68,5 +62,9 @@ public class JwtUtil {
 	
 	public Long getSubject(String accessToken) {
 		return Long.valueOf(Jwts.parserBuilder().setSigningKey(getSecretKey()).build().parseClaimsJws(accessToken).getBody().getSubject());
+	}
+	
+	public Date getExpirationDate(String accessToken) {
+		return Jwts.parserBuilder().setSigningKey(getSecretKey()).build().parseClaimsJws(accessToken).getBody().getExpiration();
 	}
 }

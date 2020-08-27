@@ -24,7 +24,8 @@ public class AuthorizationChecker {
 		for (Authorization authorization : authorizationConfiguration.getAuthorizations()) {
 			if (sameResourcePath(authorization, resourcePath) 
 					&& (userProfilesCodesContainsAuthorizationProfileCode(user, authorization) || authorization.isPermitAllAuthenticated())
-					&& authorizationContainsHttpMethod(authorization, httpMethod)) {
+					&& authorizationContainsHttpMethod(authorization, httpMethod)
+					&& user.isActive()) {
 				return true;
 			}
 		}

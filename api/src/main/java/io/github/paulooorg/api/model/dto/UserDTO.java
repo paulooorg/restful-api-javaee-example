@@ -1,10 +1,10 @@
 package io.github.paulooorg.api.model.dto;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-
-import io.github.paulooorg.api.model.entities.User;
 
 public class UserDTO extends DTO {
     @NotBlank
@@ -13,16 +13,15 @@ public class UserDTO extends DTO {
     @NotBlank
     private String name;
 
+    @NotBlank
+    @Email
+    private String email;
+    
     private LocalDateTime lastLogin;
     
+    private List<ProfileDTO> profiles;
+    
     public UserDTO() {
-    }
-
-    public UserDTO(User user) {
-        this.username = user.getUsername();
-        this.name = user.getName();
-        this.id = user.getId();
-        this.lastLogin = user.getLastLogin();
     }
 
     public String getUsername() {
@@ -47,5 +46,13 @@ public class UserDTO extends DTO {
 
 	public void setLastLogin(LocalDateTime lastLogin) {
 		this.lastLogin = lastLogin;
+	}
+
+	public List<ProfileDTO> getProfiles() {
+		return profiles;
+	}
+
+	public void setProfiles(List<ProfileDTO> profiles) {
+		this.profiles = profiles;
 	}
 }

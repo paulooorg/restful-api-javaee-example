@@ -16,11 +16,10 @@ public class UserRepository extends AbstractEntityRepository<User, Long> {
         super(User.class);
     }
     
-    public Optional<User> findByUsernameAndPassword(String username, String password) {
+    public Optional<User> findByUsername(String username) {
     	try {
-    		User user = em.createQuery("select u from User u left join fetch u.profiles where u.username = :username and u.password = :password", User.class)
-    	    		.setParameter("username", username)
-    	    		.setParameter("password", password)
+    		User user = em.createQuery("select u from User u left join fetch u.profiles where lower(u.username) = :username", User.class)
+    	    		.setParameter("username", username.toLowerCase())
     	    		.getSingleResult();
     		return Optional.ofNullable(user);
     	} catch (Exception e) {
@@ -28,4 +27,16 @@ public class UserRepository extends AbstractEntityRepository<User, Long> {
     		return Optional.empty();
     	}
     }
+
+	public Optional<User> findByEmail(String email) {
+		try {
+    		User user = em.createQuery("select u from User u left join fetch u.profiles where lower(u.email) = :email", User.class)
+    	    		.setParameter("email", email.toLowerCase())
+    	    		.getSingleResult();
+    		return Optional.ofNullable(user);
+    	} catch (Exception e) {
+    		logger.error(e.getMessage(), e);
+    		return Optional.empty();
+    	}
+	}
 }

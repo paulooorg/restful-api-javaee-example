@@ -16,12 +16,17 @@ public class TokenDTO {
 	public TokenDTO() {
 	}
 	
+	public TokenDTO(String accessToken, Date expiresIn) {
+		this.accessToken = accessToken;
+		this.expiresIn = expiresIn.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+	}
+
 	public TokenDTO(String accessToken, Date expiresIn, String refreshToken) {
 		this.accessToken = accessToken;
 		this.expiresIn = expiresIn.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
 		this.refreshToken = refreshToken;
 	}
-
+	
 	public String getTokenType() {
 		return tokenType;
 	}

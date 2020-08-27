@@ -1,7 +1,9 @@
 package io.github.paulooorg.api.infrastructure.authentication;
 
+import java.util.Optional;
+
 public class SecurityContext {
-	public LoggedUser getLoggedUser() {
-		return new ThreadLocalLoggedUser().getLoggedUser();
+	public Optional<LoggedUser> getLoggedUser() {
+		return Optional.ofNullable(new ThreadLocalLoggedUser().getLoggedUser());
 	}
 }
