@@ -7,10 +7,19 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 
 @Entity
 public class Modality extends PersistentEntity {
 	public static final int INTEREST_RATE_SCALE = 4;
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "modality_sequence")
+	@SequenceGenerator(name = "modality_sequence", sequenceName = "modality_sequence", allocationSize = 3)
+	private Long id;
 	
     private String name;
 
@@ -32,6 +41,16 @@ public class Modality extends PersistentEntity {
     		return new BigDecimal((Math.pow(1 + (interestRate.doubleValue() / 100), 1.0 / 12.0) - 1) * 100).setScale(INTEREST_RATE_SCALE, RoundingMode.HALF_UP);
     	}
     	return interestRate;
+    }
+    
+	@Override
+    public Long getId() {
+        return id;
+    }
+    
+    @Override
+    public void setId(Long id) {
+    	this.id = id;
     }
     
     public String getName() {

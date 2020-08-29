@@ -7,11 +7,20 @@ import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 
 @Entity
 public class Payment extends PersistentEntity {
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "payment_sequence")
+	@SequenceGenerator(name = "payment_sequence", sequenceName = "payment_sequence", allocationSize = 3)
+	private Long id;
+	
 	@Column(name = "payment_date")
     private LocalDate paymentDate;
 
@@ -50,6 +59,16 @@ public class Payment extends PersistentEntity {
         this.interest = interest;
     }
 
+	@Override
+    public Long getId() {
+        return id;
+    }
+    
+    @Override
+    public void setId(Long id) {
+    	this.id = id;
+    }
+    
     public LocalDate getPaymentDate() {
         return paymentDate;
     }

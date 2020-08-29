@@ -14,6 +14,7 @@
             <property name="hibernate.connection.autocommit" value="false"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL95Dialect"/>
             <property name="hibernate.default_schema" value="public"/>
+            <property name="hibernate.id.optimizer.pooled.preferred" value="pooled-lo"/>
         </properties>
     </persistence-unit>
 </persistence>

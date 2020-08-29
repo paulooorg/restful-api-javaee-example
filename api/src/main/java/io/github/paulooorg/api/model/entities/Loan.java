@@ -8,12 +8,21 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 
 @Entity
 public class Loan extends PersistentEntity {
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "loan_sequence")
+	@SequenceGenerator(name = "loan_sequence", sequenceName = "loan_sequence", allocationSize = 3)
+	private Long id;
+	
 	@ManyToOne
 	@JoinColumn(name = "client_id")
     private Client client;	
@@ -51,6 +60,16 @@ public class Loan extends PersistentEntity {
     	return getPayments().stream().map(p -> p.getInterest()).reduce(Money::plus).orElse(new Money());
     }
 
+	@Override
+    public Long getId() {
+        return id;
+    }
+    
+    @Override
+    public void setId(Long id) {
+    	this.id = id;
+    }
+    
     public Client getClient() {
         return client;
     }

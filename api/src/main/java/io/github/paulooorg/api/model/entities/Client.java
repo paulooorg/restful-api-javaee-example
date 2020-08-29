@@ -4,9 +4,18 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 
 @Entity
 public class Client extends PersistentEntity {
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "client_sequence")
+	@SequenceGenerator(name = "client_sequence", sequenceName = "client_sequence", allocationSize = 3)
+	private Long id;
+	
 	@Column(length = 150)
     private String name;
 
@@ -20,6 +29,16 @@ public class Client extends PersistentEntity {
     @Enumerated(EnumType.STRING)
     private DocumentType documentType;
 
+	@Override
+    public Long getId() {
+        return id;
+    }
+    
+    @Override
+    public void setId(Long id) {
+    	this.id = id;
+    }
+    
 	public String getName() {
 		return name;
 	}

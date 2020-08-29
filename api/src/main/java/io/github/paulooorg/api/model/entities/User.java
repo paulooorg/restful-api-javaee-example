@@ -12,13 +12,22 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.Email;
 
 import io.github.paulooorg.api.infrastructure.security.Password;
 
 @Entity
 public class User extends PersistentEntity {
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_sequence")
+	@SequenceGenerator(name = "user_sequence", sequenceName = "user_sequence", allocationSize = 3)
+	private Long id;
+
 	@Column(unique = true)
     private String username;
 
@@ -53,6 +62,16 @@ public class User extends PersistentEntity {
     		profile.setUser(this);
     		profiles.add(profile);
     	}
+    }
+    
+    @Override
+    public Long getId() {
+        return id;
+    }
+    
+    @Override
+    public void setId(Long id) {
+    	this.id = id;
     }
     
     public String getUsername() {
