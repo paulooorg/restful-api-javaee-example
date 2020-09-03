@@ -10,6 +10,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+import javax.ws.rs.core.Response.ResponseBuilder;
 
 import org.apache.logging.log4j.Logger;
 
@@ -42,12 +43,12 @@ public abstract class AbstractGenericListResource<D extends DTO, E extends Persi
 	}
 	
 	@Override
-	public Response getAll(UriInfo uriInfo) {
+	public Page<D> getAll(UriInfo uriInfo) {
 		logger.debug("REST request from {} with path {} to get all entities", getClass().getSimpleName(), Resources.getPathValue(getClass()));
 		Page<D> page = getService().getAll(new RequestOptions(uriInfo));
 		page.createLinks(this.uriInfo);
 		page.getContent().stream().<D>map(d -> {d.setLinks(getHateoasTemplate().getLinksForGetAll(d)); return d;}).collect(Collectors.toList());
-		return Response.status(Response.Status.OK).entity(page).build();
+		return page;
 	}
 
 	@Override

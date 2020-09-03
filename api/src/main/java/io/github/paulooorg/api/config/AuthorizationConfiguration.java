@@ -35,7 +35,9 @@ public class AuthorizationConfiguration {
 				.resource("logout.*").allMethods().permitAll().authenticated().and()
 				
 				.resource("login").methods("POST").permitAll().notAuthenticated().and()
-				.resource("login\\/refresh").methods("GET").permitAll().authenticated()
+				.resource("login\\/refresh").methods("GET").permitAll().authenticated().and()
+				
+				.resource("openapi.json").methods("GET").permitAll().notAuthenticated()
 				
 				.build();
 		

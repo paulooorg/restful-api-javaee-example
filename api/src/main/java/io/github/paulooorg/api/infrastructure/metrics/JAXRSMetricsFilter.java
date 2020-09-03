@@ -17,9 +17,11 @@ public class JAXRSMetricsFilter implements ContainerRequestFilter, ContainerResp
 	@Override
 	public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext)
 			throws IOException {
-		timingContext.stop();
-		String statusCode = Integer.valueOf(responseContext.getStatus()).toString();
-		MetricsServletContextListener.METRIC_REGISTRY.meter(createMetricName("jaxrs.mark", statusCode, requestContext)).mark();
+		if (timingContext != null) {
+			timingContext.stop();
+			String statusCode = Integer.valueOf(responseContext.getStatus()).toString();
+			MetricsServletContextListener.METRIC_REGISTRY.meter(createMetricName("jaxrs.mark", statusCode, requestContext)).mark();
+		}
 	}
 	
 	@Override

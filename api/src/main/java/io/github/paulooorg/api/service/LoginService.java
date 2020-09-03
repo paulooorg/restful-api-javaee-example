@@ -26,11 +26,19 @@ public class LoginService {
 		if (user.isPresent() && user.get().getPassword().isEquals(login.getPassword()) && user.get().isActive()) {
 			userService.updateLastLoginDate(user.get());
 			TokenDTO token = new JwtUtil().createTokenDTO(user.get());
+			blockLastRefreshToken(user.get());
 			RefreshToken refreshToken = RefreshToken.newRefreshToken(user.get());
 			refreshTokenRepository.save(refreshToken);
 			token.setRefreshToken(refreshToken.getToken());
 			return token;
 		}
 		throw new BusinessException("invalidCredentials", new Object[] {});
+	}
+	
+	private void blockLastRefreshToken(User user) {
+		Optional<RefreshToken> lastRefreshToken = refreshTokenRepository.findLastByUser(user);
+		if (lastRefreshToken.isPresent() && !lastRefreshToken.get().isBlocked()) {
+			refreshTokenRepository.block(lastRefreshToken.get().getToken());
+		}
 	}
 }

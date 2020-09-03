@@ -5,7 +5,6 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.apache.logging.log4j.Logger;
@@ -40,21 +39,21 @@ public abstract class AbstractGenericResource<D extends DTO, E extends Persisten
 	}
 	
 	@Override
-	public Response create(D dto) {
+	public D create(D dto) {
 		logger.debug("REST request from {} with path {} to create entity", getClass().getSimpleName(), Resources.getPathValue(getClass()));
     	new BeanValidator<D>().validate(dto);
     	D created = getMapper().entityToDTO(getService().create(getMapper().DTOToEntity(dto)));
     	created.setLinks(getHateoasTemplate().getLinksForCreate(created));
-        return Response.ok().entity(created).build();
+		return created;
 	}
 
 	@Override
-	public Response update(Long id, D dto) {
+	public D update(Long id, D dto) {
 		logger.debug("REST request from {} with path {} to update entity", getClass().getSimpleName(), Resources.getPathValue(getClass()));
 		try {
 			D updated = getMapper().entityToDTO(getService().update(id, dto));
 			updated.setLinks(getHateoasTemplate().getLinksForUpdate(updated));
-			return Response.ok().entity(updated).build();
+			return updated;
 		} catch (BusinessException e) {
 			throwEntityIdNotFoundIfNeeded(e, id);
 			throw e;
