@@ -31,9 +31,8 @@ public class Password {
 	
 	private String hashPassword(String password, byte[] salt) {
 		try {
-			final int iterationCount = 65536; //TODO: Magic number
-            final int keyLength = 128; //TODO: Magic number
-			
+			final int iterationCount = 65536;
+            final int keyLength = 128;
 			KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, iterationCount, keyLength);
 			SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
 			byte[] hash = factory.generateSecret(spec).getEncoded();
@@ -53,7 +52,8 @@ public class Password {
 	
 	private byte[] getSalt() {
 		SecureRandom sr = new SecureRandom();
-		byte[] salt = new byte[16]; //TODO: Magic number
+		final int saltLength = 16;
+		byte[] salt = new byte[saltLength];
 		sr.nextBytes(salt);
 		return salt;
 	}

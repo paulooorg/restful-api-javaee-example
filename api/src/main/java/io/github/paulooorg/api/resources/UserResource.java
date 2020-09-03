@@ -7,11 +7,10 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
 
 import io.github.paulooorg.api.infrastructure.authentication.LoggedUser;
 import io.github.paulooorg.api.infrastructure.authentication.SecurityContext;
+import io.github.paulooorg.api.infrastructure.exception.ApiExceptions;
 import io.github.paulooorg.api.infrastructure.validation.BeanValidator;
 import io.github.paulooorg.api.model.dto.ChangePasswordDTO;
 import io.github.paulooorg.api.model.dto.UserDTO;
@@ -41,19 +40,18 @@ public class UserResource extends AbstractGenericResource<UserDTO, User> {
 	
 	@GET
 	@Path("logged")
-	public Response getLoggedUser() {
+	public UserDTO getLoggedUser() {
 		Optional<LoggedUser> loggedUser = securityContext.getLoggedUser();
 		if (loggedUser.isPresent()) {
-			return Response.ok().entity(UserMapper.INSTANCE.entityToDTO(loggedUser.get().getUser())).build();
+			return UserMapper.INSTANCE.entityToDTO(loggedUser.get().getUser());
 		}
-		return Response.status(Status.NOT_FOUND).build(); //TODO: Error message
+		throw ApiExceptions.unauthenticatedUser();
 	}
 	
 	@POST
 	@Path("{id}/change-password")
-	public Response changePassword(@PathParam("id") Long id, ChangePasswordDTO changePasswordDTO) {
+	public void changePassword(@PathParam("id") Long id, ChangePasswordDTO changePasswordDTO) {
 		new BeanValidator<ChangePasswordDTO>().validate(changePasswordDTO);
 		userService.changePassword(id, changePasswordDTO);
-		return Response.ok().build();
 	}
 }
