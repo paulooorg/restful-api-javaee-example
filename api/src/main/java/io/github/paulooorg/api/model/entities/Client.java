@@ -9,7 +9,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 
+import org.hibernate.envers.Audited;
+
 @Entity
+@Audited
 public class Client extends PersistentEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "client_sequence")

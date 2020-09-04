@@ -15,6 +15,9 @@
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL95Dialect"/>
             <property name="hibernate.default_schema" value="public"/>
             <property name="hibernate.id.optimizer.pooled.preferred" value="pooled-lo"/>
+
+            <property name="org.hibernate.envers.audit_strategy" value="org.hibernate.envers.strategy.ValidityAuditStrategy"/>
+            <property name="org.hibernate.envers.default_schema" value="audit"/>
         </properties>
     </persistence-unit>
 </persistence>

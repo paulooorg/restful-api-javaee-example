@@ -12,7 +12,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 
+import org.hibernate.envers.Audited;
+
 @Entity
+@Audited
 public class Modality extends PersistentEntity {
 	public static final int INTEREST_RATE_SCALE = 4;
 	
