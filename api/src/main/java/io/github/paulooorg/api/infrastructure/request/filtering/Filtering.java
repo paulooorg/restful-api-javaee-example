@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.ws.rs.core.UriInfo;
 
+import io.github.paulooorg.api.infrastructure.exception.ApiExceptions;
+
 public class Filtering {
 	private String field;
 	
@@ -18,6 +20,9 @@ public class Filtering {
 		if (filtering != null) {
 			for (String filter : filtering) {
 				String[] fieldOperatorAndValues = filter.split(",");
+				if (fieldOperatorAndValues.length < 3) { // field,operator,value1
+					throw ApiExceptions.invalidFilter();
+				}
 				String field = fieldOperatorAndValues[0].trim();
 				String operator = fieldOperatorAndValues[1].trim();
 				List<String> values = new ArrayList<>();

@@ -10,6 +10,7 @@ import io.github.paulooorg.api.infrastructure.authentication.AuthenticationFilte
 import io.github.paulooorg.api.infrastructure.authorization.AuthorizationFilter;
 import io.github.paulooorg.api.infrastructure.exception.ApiExceptionMapper;
 import io.github.paulooorg.api.infrastructure.exception.BusinessExceptionMapper;
+import io.github.paulooorg.api.infrastructure.exception.GenericExceptionMapper;
 import io.github.paulooorg.api.infrastructure.exception.ValidationExceptionMapper;
 import io.github.paulooorg.api.infrastructure.json.CustomObjectMapper;
 import io.github.paulooorg.api.infrastructure.metrics.JAXRSMetricsFilter;
@@ -54,6 +55,7 @@ public class JAXRSConfiguration extends Application {
     
     private Set<Class<?>> getProviders() {
     	Set<Class<?>> providers = new HashSet<>();
+    	providers.add(GenericExceptionMapper.class);
     	providers.add(BusinessExceptionMapper.class);
     	providers.add(ValidationExceptionMapper.class);
     	providers.add(ApiExceptionMapper.class);

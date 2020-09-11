@@ -20,6 +20,10 @@ public class Money {
         this.value = BigDecimal.ZERO;
     }
 
+    public Money(String value) {
+    	this.value = new BigDecimal(value);
+    }
+    
     public Money(BigDecimal value) {
         this.value = value;
     }

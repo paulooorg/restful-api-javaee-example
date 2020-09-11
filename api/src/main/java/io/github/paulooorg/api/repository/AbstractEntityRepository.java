@@ -73,6 +73,7 @@ public abstract class AbstractEntityRepository<E extends BaseEntity<PK>, PK exte
     	
     	// List
     	CriteriaQuery<E> criteriaQuery = criteriaBuilder.createQuery(entityType);
+    	criteriaQuery.distinct(true);
     	Root<E> from = criteriaQuery.from(entityType);
     	criteriaQuery.orderBy(createSorting(sorting, criteriaBuilder, from));
     	CriteriaQuery<E> select = criteriaQuery.select(from).where(createFilters(filtering, criteriaBuilder, from).toArray(new Predicate[0]));
@@ -88,7 +89,7 @@ public abstract class AbstractEntityRepository<E extends BaseEntity<PK>, PK exte
     	CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
     	CriteriaQuery<Long> countQuery = criteriaBuilder.createQuery(Long.class);
     	Root<E> fromCount = countQuery.from(entityType);
-    	countQuery.select(criteriaBuilder.count(fromCount)).where(createFilters(filtering, criteriaBuilder, fromCount).toArray(new Predicate[0]));
+    	countQuery.select(criteriaBuilder.countDistinct(fromCount)).where(createFilters(filtering, criteriaBuilder, fromCount).toArray(new Predicate[0]));
     	Long count = em.createQuery(countQuery).getSingleResult();
     	return count;
     }

@@ -1,46 +1,39 @@
 package io.github.paulooorg.api.infrastructure.request.filtering;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+
+import io.github.paulooorg.api.infrastructure.exception.ApiExceptions;
+import io.github.paulooorg.api.infrastructure.request.criteria.expression.CriteriaExpressionBuilder;
+import io.github.paulooorg.api.infrastructure.request.criteria.field.DateFieldFactory;
+import io.github.paulooorg.api.infrastructure.request.criteria.field.DefaultFieldFactory;
+import io.github.paulooorg.api.infrastructure.request.criteria.field.FieldValueFactoryProcessor;
 
 public class Between implements PredicateCreator {
 	@Override
 	public Predicate create(Filtering filter, CriteriaBuilder criteriaBuilder, Root<?> from) {
-		if (isDate(from, filter.getField())) {
-			DateTimeFormatter dtf = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
-			LocalDateTime leftDate = LocalDateTime.parse(filter.getValues().get(0), dtf);
-			LocalDateTime rightDate = LocalDateTime.parse(filter.getValues().get(1), dtf);
-			return criteriaBuilder.between(from.get(filter.getField()), leftDate, rightDate);
+		if (filter.getValues().size() != 2) {
+			throw ApiExceptions.betweenOperatorNeedTwoValues();
 		}
 		
-		if (isNumber(from, filter.getField())) {
-			Long leftValue = Long.valueOf(filter.getValues().get(0));
-			Long rightValue = Long.valueOf(filter.getValues().get(1));	
-			return criteriaBuilder.between(from.get(filter.getField()), leftValue, rightValue);
-		}
+		Expression<?> field = CriteriaExpressionBuilder.build(from, filter.getField());
 		
-		String leftValue = filter.getValues().get(0);
-		String rightValue = filter.getValues().get(1);
-		return criteriaBuilder.between(from.get(filter.getField()), leftValue, rightValue);
+		FieldValueFactoryProcessor fieldValueFactoryProcessor = new FieldValueFactoryProcessor
+				(Arrays.asList(new DateFieldFactory(), new DefaultFieldFactory()));
+		
+		Object leftValue = fieldValueFactoryProcessor.execute(field, filter.getValues().get(0));
+		
+		Object rightValue = fieldValueFactoryProcessor.execute(field, filter.getValues().get(1));
+		
+		return between(criteriaBuilder, field, leftValue, rightValue);
 	}
 	
-	public boolean isDate(Root<?> from, String field) {
-		Class<?> fieldType = from.get(field).getJavaType();
-		List<Class<?>> dateTypes = Arrays.asList(Date.class, LocalDate.class, LocalDateTime.class);
-		return dateTypes.contains(fieldType);
-	}
-	
-	public boolean isNumber(Root<?> from, String field) {
-		Class<?> fieldType = from.get(field).getJavaType();
-		List<Class<?>> numberTypes = Arrays.asList(Long.class, Integer.class, Float.class, Double.class);
-		return numberTypes.contains(fieldType);
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private <Y extends Comparable<? super Y>> Predicate between(CriteriaBuilder criteriaBuilder, Expression field, Object leftValue, Object rightValue) {
+		return criteriaBuilder.between(field, (Y) leftValue, (Y) rightValue);
 	}
 }

@@ -2,19 +2,19 @@
 
 ### TODO
 
-- [ ] JWT
-- [ ] Swagger
+- [X] JWT
+- [X] Swagger
 - [X] Sorting
 - [ ] Filtering
 - [X] Resources
 - [X] Deploy Wildfly Maven
 - [ ] Integration Testing
 - [ ] Cache
-- [ ] Security
-- [ ] Audit
+- [X] Security
+- [X] Audit
 - [ ] Docker
-- [ ] Monitoring
-- [ ] HATEOAS
+- [X] Monitoring
+- [X] HATEOAS
 - [X] application.properties Configuration (Database, Logs, JWT Secret Key...)
 - [X] Code coverage
 - [ ] CORS and CSRF
