@@ -8,6 +8,7 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <jta-data-source>java:/datasources/apiDS</jta-data-source>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
+        <shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>
         <properties>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
@@ -18,6 +19,10 @@
 
             <property name="org.hibernate.envers.audit_strategy" value="org.hibernate.envers.strategy.ValidityAuditStrategy"/>
             <property name="org.hibernate.envers.default_schema" value="audit"/>
+            
+            <property name="hibernate.cache.provider_class" value="org.hibernate.cache.EhCacheProvider"/>
+            <property name="hibernate.cache.use_second_level_cache" value="true"/>
+			<property name="hibernate.cache.use_query_cache" value="true"/>
         </properties>
     </persistence-unit>
 </persistence>

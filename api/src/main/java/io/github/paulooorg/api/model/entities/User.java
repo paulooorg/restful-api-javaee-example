@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -19,9 +20,14 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.Email;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 import io.github.paulooorg.api.infrastructure.security.Password;
 
 @Entity
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class User extends PersistentEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_sequence")
@@ -47,6 +53,7 @@ public class User extends PersistentEntity {
     @Column(name = "last_login")
     private LocalDateTime lastLogin;
     
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Profile> profiles;
     

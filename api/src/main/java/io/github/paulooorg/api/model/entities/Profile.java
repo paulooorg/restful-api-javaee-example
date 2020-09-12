@@ -1,5 +1,6 @@
 package io.github.paulooorg.api.model.entities;
 
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -11,7 +12,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 @Entity
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Profile extends PersistentEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "profile_sequence")

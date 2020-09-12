@@ -3,6 +3,7 @@ package io.github.paulooorg.api.model.entities;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -12,10 +13,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.envers.Audited;
 
 @Entity
 @Audited
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Modality extends PersistentEntity {
 	public static final int INTEREST_RATE_SCALE = 4;
 	
