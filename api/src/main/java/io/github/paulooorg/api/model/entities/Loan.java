@@ -15,6 +15,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Loan extends PersistentEntity {
@@ -24,23 +27,28 @@ public class Loan extends PersistentEntity {
 	private Long id;
 	
 	@ManyToOne
-	@JoinColumn(name = "client_id")
+	@JoinColumn(name = "client_id", nullable = false)
     private Client client;	
 
     @Embedded
+    @NotNull
     private Money amount;
 
     @Column(name = "term_in_months")
+    @NotNull
+    @Min(1)
     private Integer termInMonths;
 
     @Column(name = "first_payment_date")
+    @NotNull
     private LocalDate firstPaymentDate;
 
     @ManyToOne
-    @JoinColumn(name = "modality_id")
+    @JoinColumn(name = "modality_id", nullable = false)
     private Modality modality;
 
     @OneToMany(mappedBy = "loan", cascade = CascadeType.ALL)
+    @NotEmpty
     private List<Payment> payments = new ArrayList<>();
 
     public void simulate() {

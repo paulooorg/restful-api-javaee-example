@@ -14,6 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "user_account_key")
@@ -23,17 +25,21 @@ public class UserAccountKey extends PersistentEntity {
 	@SequenceGenerator(name = "user_account_key_sequence", sequenceName = "user_account_key_sequence", allocationSize = 3)
 	private Long id;
 	
+	@NotNull
+	@NotBlank
 	private String key;
 	
 	@Column(name = "key_type")
 	@Enumerated(EnumType.STRING)
+	@NotNull
 	private KeyType keyType;
 	
 	@ManyToOne
-	@JoinColumn(name = "user_id")
+	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
 	
 	@Column(name = "expiration")
+	@NotNull
 	private LocalDateTime expiration;
 	
 	public static UserAccountKey newRecoveryKey(User user) {

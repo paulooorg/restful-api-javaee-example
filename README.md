@@ -5,11 +5,11 @@
 - [X] JWT
 - [X] Swagger
 - [X] Sorting
-- [ ] Filtering
+- [X] Filtering
 - [X] Resources
 - [X] Deploy Wildfly Maven
 - [ ] Integration Testing
-- [ ] Cache
+- [X] Cache
 - [X] Security
 - [X] Audit
 - [ ] Docker

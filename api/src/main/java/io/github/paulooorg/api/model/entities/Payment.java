@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Payment extends PersistentEntity {
@@ -22,31 +24,37 @@ public class Payment extends PersistentEntity {
 	private Long id;
 	
 	@Column(name = "payment_date")
+	@NotNull
     private LocalDate paymentDate;
 
 	@Column(name = "payment_number")
+	@NotNull
+	@Min(1)
     private Integer paymentNumber;
 
 	@Embedded
 	@AttributeOverrides({
 		@AttributeOverride(name = "value", column = @Column(name = "payment")),
 	})
+	@NotNull
     private Money payment;
 	
 	@Embedded
 	@AttributeOverrides({
 		@AttributeOverride(name = "value", column = @Column(name = "principal")),
 	})
+	@NotNull
     private Money principal;
 	
 	@Embedded
 	@AttributeOverrides({
 		@AttributeOverride(name = "value", column = @Column(name = "interest")),
 	})
+	@NotNull
     private Money interest;
 	
 	@ManyToOne
-	@JoinColumn(name = "loan_id")
+	@JoinColumn(name = "loan_id", nullable = false)
 	private Loan loan;
 
     public Payment() {

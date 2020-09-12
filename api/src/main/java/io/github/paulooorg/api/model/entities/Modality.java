@@ -12,6 +12,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -29,19 +31,28 @@ public class Modality extends PersistentEntity {
 	@SequenceGenerator(name = "modality_sequence", sequenceName = "modality_sequence", allocationSize = 3)
 	private Long id;
 	
+	@Column(length = 150)
+	@NotNull
+	@NotBlank
     private String name;
 
+	@Column(length = 150)
+	@NotNull
+	@NotBlank
     private String description;
 
     @Column(name = "amortization_method")
     @Enumerated(EnumType.STRING)
+    @NotNull
     private AmortizationMethod amortizationMethod;
 
     @Column(name = "interest_rate", scale = INTEREST_RATE_SCALE)
+    @NotNull
     private BigDecimal interestRate;
 
     @Column(name = "rate_period")
     @Enumerated(EnumType.STRING)
+    @NotNull
     private RatePeriod ratePeriod;
 
     public BigDecimal getMonthlyInterestRate() {

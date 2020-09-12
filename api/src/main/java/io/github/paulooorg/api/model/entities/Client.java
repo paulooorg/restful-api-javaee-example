@@ -8,6 +8,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.envers.Audited;
 
@@ -20,16 +23,24 @@ public class Client extends PersistentEntity {
 	private Long id;
 	
 	@Column(length = 150)
+	@NotNull
+	@NotBlank
     private String name;
 
     @Column(length = 100)
+    @NotNull
+    @NotBlank
+    @Email
     private String email;
 
     @Column(length = 18)
+    @NotNull
+    @NotBlank
     private String document;
 
     @Column(name = "document_type")
     @Enumerated(EnumType.STRING)
+    @NotNull
     private DocumentType documentType;
 
 	@Override
