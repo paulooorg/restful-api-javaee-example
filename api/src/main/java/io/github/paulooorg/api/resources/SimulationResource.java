@@ -12,7 +12,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Link;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import io.github.paulooorg.api.infrastructure.hateoas.LinkDTO;
@@ -32,10 +31,10 @@ public class SimulationResource {
 	private UriInfo uriInfo;
 	
 	@POST
-	public Response simulate(SimulationDTO simulationDTO) {
+	public LoanDTO simulate(SimulationDTO simulationDTO) {
 		LoanDTO loanDTO = LoanMapper.INSTANCE.entityToDTO(simulationService.simulate(simulationDTO));
 		loanDTO.setLinks(createLinks(loanDTO));
-		return Response.ok().entity(loanDTO).build();
+		return loanDTO;
 	}
 	
 	private List<LinkDTO> createLinks(LoanDTO loanDTO) {

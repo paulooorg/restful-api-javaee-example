@@ -17,4 +17,4 @@
 - [X] HATEOAS
 - [X] application.properties Configuration (Database, Logs, JWT Secret Key...)
 - [X] Code coverage
-- [ ] CORS and CSRF
+- [X] CORS and CSRF

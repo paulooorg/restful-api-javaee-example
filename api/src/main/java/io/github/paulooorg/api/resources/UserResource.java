@@ -4,13 +4,18 @@ import java.util.Optional;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
+import javax.ws.rs.HttpMethod;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Link;
+import javax.ws.rs.core.UriInfo;
 
 import io.github.paulooorg.api.infrastructure.authentication.LoggedUser;
 import io.github.paulooorg.api.infrastructure.authentication.SecurityContext;
 import io.github.paulooorg.api.infrastructure.exception.ApiExceptions;
+import io.github.paulooorg.api.infrastructure.hateoas.LinkDTO;
 import io.github.paulooorg.api.infrastructure.validation.BeanValidator;
 import io.github.paulooorg.api.model.dto.ChangePasswordDTO;
 import io.github.paulooorg.api.model.dto.UserDTO;
@@ -27,6 +32,9 @@ public class UserResource extends AbstractGenericResource<UserDTO, User> {
 
     @Inject
     private SecurityContext securityContext;
+    
+    @Context
+    private UriInfo uriInfo;
     
 	@Override
 	public EntityMapper<UserDTO, User> getMapper() {
@@ -50,8 +58,15 @@ public class UserResource extends AbstractGenericResource<UserDTO, User> {
 	
 	@POST
 	@Path("{id}/change-password")
-	public void changePassword(@PathParam("id") Long id, ChangePasswordDTO changePasswordDTO) {
+	public LinkDTO changePassword(@PathParam("id") Long id, ChangePasswordDTO changePasswordDTO) {
 		new BeanValidator<ChangePasswordDTO>().validate(changePasswordDTO);
 		userService.changePassword(id, changePasswordDTO);
+		return createLink();
+	}
+	
+	private LinkDTO createLink() {
+		return new LinkDTO(
+				Link.fromUriBuilder(uriInfo.getBaseUriBuilder().path(LoginResource.class)).rel("login").build(),
+				HttpMethod.POST);
 	}
 }
