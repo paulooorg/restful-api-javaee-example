@@ -1,0 +1,43 @@
+version: '3'
+services: 
+    postgres:
+        build: 
+            dockerfile: ./postgres/Dockerfile
+            context: .
+            args:
+                - DB=api
+                - USER=api
+                - PASS=api
+                - VERSION=12
+        image: api/postgres
+        container_name: postgres
+        ports:
+            - "5433:5432"
+        networks:
+            - prd
+    
+    wildfly:
+        build:
+            dockerfile: ./wildfly/Dockerfile
+            context: .
+            args: 
+                - WILDFLY_USER=admin
+                - WILDFLY_PASS=admin
+                - WILDFLY_VERSION=20.0.1.Final
+                - DS_NAME=apiDS
+                - DS_USER=api
+                - DS_PASS=api
+                - DS_DB=api
+        image: api/wildfly
+        container_name: wildfly
+        ports:
+            - "8080:8080"
+            - "9990:9990"
+        networks:
+            - prd
+        depends_on: 
+            - "postgres"
+
+networks:
+    prd:
+        driver: bridge
