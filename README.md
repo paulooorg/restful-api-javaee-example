@@ -73,6 +73,10 @@ Para paginar os resultados de uma busca pode ser utilizando os Query Params:
 
 Exemplo: page=1&per_page=10
 
+## Monitorando a API
+
+Todas as métricas coletadas podem ser visualizadas no caminho /api/metrics/
+
 # Como executar o projeto?
 
 ## Docker
@@ -114,9 +118,9 @@ A API faz o envio de e-mail para a ativação de usuários registrados e reset d
 
 ### Postman
 
-Todos os Endpoints e exemplos de uso estão documentados no arquivo docs/Api.postman_collection.json
+Todos os Endpoints e exemplos de uso estão documentados no arquivo [docs/Api.postman_collection.json](docs/Api.postman_collection.json)
 
 ### Swagger
 
 Existe uma documentação dos Endpoints da API, essa documentação é gerada de forma automática. O json para o Swagger fica disponível no caminho /api/v1/openapi.json.
-Em docs/swagger-doc/dist existe um index.html que apresenta esse arquivo json.
+Em [docs/swagger-doc/dist](docs/swagger-doc/dist) existe um [index.html](docs/swagger-doc/dist/index.html) que apresenta esse arquivo json.
