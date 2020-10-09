@@ -11,7 +11,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/api/v1/user",
+					"raw": "http://localhost:8080/api/v1/user?filter=lastLogin,between,2020-01-04T00:00:00.00,2020-12-08T00:00:00.00",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -19,9 +19,14 @@
 					"port": "8080",
 					"path": [
 						"api",
-						"api",
 						"v1",
 						"user"
+					],
+					"query": [
+						{
+							"key": "filter",
+							"value": "lastLogin,between,2020-01-04T00:00:00.00,2020-12-08T00:00:00.00"
+						}
 					]
 				}
 			},
@@ -33,7 +38,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/api/v1/user/3",
+					"raw": "http://localhost:8080/api/api/v1/user/169",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -44,7 +49,7 @@
 						"api",
 						"v1",
 						"user",
-						"3"
+						"169"
 					]
 				}
 			},
@@ -64,7 +69,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"aaa\",\r\n    \"username\": \"sasssdsa\"\r\n}",
+					"raw": "{\r\n    \"name\": \"admin\",\r\n    \"username\": \"admin\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -149,6 +154,611 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Get Modalities",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/modality",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"modality"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Modality",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"Personal Credit Price\",\r\n\t\"description\":\"Personal Credit Price\",\r\n\t\"amortizationMethod\":\"PRICE\",\r\n\t\"interestRate\":\"9\",\r\n\t\"ratePeriod\":\"YEARLY\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/modality",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"modality"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Modality",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/modality/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"modality",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Modality",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"Test Name After Update 31\",\r\n\t\"description\":\"Test Description After Update 31\",\r\n\t\"amortizationMethod\":\"SAC\",\r\n\t\"interestRate\":\"0.99\",\r\n\t\"ratePeriod\":\"MONTHLY\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/modality/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"modality",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Client",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"Aperture Laboratories\",\r\n    \"email\":\"contact@aperturelab.com\",\r\n    \"document\":\"40469675000107\",\r\n    \"documentType\":\"CNPJ\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/client",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"client"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Clients",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/client",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"client"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Simulation",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"clientId\":1,\r\n    \"amount\":\"1000.00\",\r\n    \"termInMonths\":\"4\",\r\n    \"firstPaymentDate\":\"2020-10-12\",\r\n    \"modalityId\":1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/simulation",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"simulation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Loans",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/loan?&page=1&per_page=10&sort=id,DESC",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"loan"
+					],
+					"query": [
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "per_page",
+							"value": "10"
+						},
+						{
+							"key": "sort",
+							"value": "id,DESC"
+						},
+						{
+							"key": "filter",
+							"value": "client.name,equal,Paulo",
+							"disabled": true
+						},
+						{
+							"key": "filter",
+							"value": "client.id,equal,1",
+							"disabled": true
+						},
+						{
+							"key": "filter",
+							"value": "modality.ratePeriod,equal,MONTHLY",
+							"disabled": true
+						},
+						{
+							"key": "filter",
+							"value": "payments.payment,equal,269.03",
+							"disabled": true
+						},
+						{
+							"key": "filter",
+							"value": "payments.paymentDate,equal,2020-07-22",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"gordon.freeman\",\r\n    \"password\": \"blackmesa\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Payment",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/loan/4/payment/13",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"loan",
+						"4",
+						"payment",
+						"13"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Logged User",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/user/logged",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"user",
+						"logged"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Gordon Freeman\",\r\n    \"username\": \"gordon.freeman\",\r\n    \"password\": \"blackmesa\",\r\n    \"email\": \"gordon.freeman@blackmesa.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/user-account/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"user-account",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Activate User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"key\": \"e367dbeb-bb8a-46ed-af23-dfce42a499b2\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/user-account/activate",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"user-account",
+						"activate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Reset Password Init",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"gordon.freemanx@blackmesa.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/user-account/reset-password/init",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"user-account",
+						"reset-password",
+						"init"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Reset Password Finish",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"recoveryKey\": \"fd9ca31f-e191-4130-8aa9-20a0611f9366\",\r\n    \"newPassword\": \"mynewpassword\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/api/v1/user-account/reset-password/finish",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"api",
+						"v1",
+						"user-account",
+						"reset-password",
+						"finish"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Change Password",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"currentPassword\": \"mynewpassword\",\r\n    \"newPassword\": \"mynewnewpassword\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/api/v1/user/360/change-password",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"api",
+						"v1",
+						"user",
+						"360",
+						"change-password"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"key\": \"726cf0de-25f0-436c-87a0-290faa6e11a3\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/logout",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Refresh Token",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"key\": \"726cf0de-25f0-436c-87a0-290faa6e11a3\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/login/refresh",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"login",
+						"refresh"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Swagger",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/openapi.json",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"openapi.json"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJhcGkiLCJpYXQiOjE2MDIyMDg0MDcsInN1YiI6IjEiLCJleHAiOjE2MDIyMTAyMDd9._uTmZzWK8NFW7vXLdpo5QsX0drLJ9GEkqqac0xh8x0o_XECh95o43tGarRayLUZOALVV01dAkBYlCLd5eNHloQ",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "fa9485bc-1f73-4927-b4d8-baf6597a9ede",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "e2238736-805b-416d-9b57-c7ae1ae39b35",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
 		}
 	],
 	"protocolProfileBehavior": {}

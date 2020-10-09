@@ -13,7 +13,7 @@ import io.github.paulooorg.api.model.entities.Loan;
 
 public class SACTest {
 	@Test
-	public void shouldSimulateWithSACStrategy() {
+	public void shouldSimulateWithSACStrategyExampleOne() {
 		Loan loan = new LoanDataBuilder()
 				.amount(new BigDecimal("12300"))
 				.firstPaymentDate(LocalDate.now())
